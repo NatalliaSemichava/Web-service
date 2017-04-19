@@ -36,7 +36,6 @@ public class GetAllBooks implements IHandle {
 
 		rp.setVersion(rq.getVersion());
 		rp.setStatusCode(ResponseConstants.STATUS_CODE_200_OK);
-		rp.setContentType(rq.getAccept());
 
 		BooksPojo book = new BooksPojo(books);
 
@@ -47,7 +46,6 @@ public class GetAllBooks implements IHandle {
 
 			body = writer.toString();
 
-			rp.setContentLength(String.valueOf(body.getBytes().length));
 			rp.setBody(body);
 		//} else {
 			//body = JsonUtils.toJson(book);
@@ -57,7 +55,6 @@ public class GetAllBooks implements IHandle {
 
 		try {
 			rp.write();
-			System.out.println(rp.toString());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

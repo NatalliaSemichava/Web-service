@@ -13,24 +13,12 @@ public class Request {
 	private String method;
 	private String path;
 	private String version;
-	private String host;
-	private String connection;
-	private String csp;
-	private String cacheControl;
-	private String userAgent;
 	private String accept;
-	private String acceptEncoding;
-	private String acceptLanguage;
-	private int contentLenght = 0;
-	private String origin;
-	private String contentType;
 	private String body;
 
 	public Request(){}
 
-	public Request(BufferedReader bfr) {
-		parseRequest(bfr);
-	}
+	public Request(String[] array){parseRequest(array);}
 
 	public String getMethod() {
 		return method;
@@ -56,86 +44,6 @@ public class Request {
 		this.version = version;
 	}
 
-	public String getHost() {
-		return host;
-	}
-
-	public void setHost(String host) {
-		this.host = host;
-	}
-
-	public String getConnection() {
-		return connection;
-	}
-
-	public void setConnection(String connection) {
-		this.connection = connection;
-	}
-
-	public String getCsp() {
-		return csp;
-	}
-
-	public void setCsp(String csp) {
-		this.csp = csp;
-	}
-
-	public String getCacheControl() {
-		return cacheControl;
-	}
-
-	public void setCacheControl(String cacheControl) {
-		this.cacheControl = cacheControl;
-	}
-
-	public String getUserAgent() {
-		return userAgent;
-	}
-
-	public void setUserAgent(String userAgent) {
-		this.userAgent = userAgent;
-	}
-
-	public String getAcceptEncoding() {
-		return acceptEncoding;
-	}
-
-	public void setAcceptEncoding(String acceptEncoding) {
-		this.acceptEncoding = acceptEncoding;
-	}
-
-	public String getAcceptLanguage() {
-		return acceptLanguage;
-	}
-
-	public void setAcceptLanguage(String acceptLanguage) {
-		this.acceptLanguage = acceptLanguage;
-	}
-
-	public int getContentLenght() {
-		return contentLenght;
-	}
-
-	public void setContentLenght(int contentLenght) {
-		this.contentLenght = contentLenght;
-	}
-
-	public String getOrigin() {
-		return origin;
-	}
-
-	public void setOrigin(String origin) {
-		this.origin = origin;
-	}
-
-	public String getContentType() {
-		return contentType;
-	}
-
-	public void setContentType(String contentType) {
-		this.contentType = contentType;
-	}
-
 	public String getAccept() {
 		return accept;
 	}
@@ -152,76 +60,25 @@ public class Request {
 		this.body = body;
 	}
 
-	private void parseRequest(BufferedReader bfr) {
-		List<String> headerValue = null;
-		try {
-			headerValue = HttpMethodUtils.getHeaderValue(bfr);
-		} catch (IOException e) {
-			e.printStackTrace();
+	private void parseRequest(String[] array) {
+		body="";
+		String[] head = array[0].split(" ");
+
+
+		if (head[0].startsWith(CommonConstants.GET)) {
+			method = CommonConstants.GET;
+		} else if (head[0].startsWith(CommonConstants.POST)) {
+			method = CommonConstants.POST;
 		}
 
-		for (String value : headerValue) {
-			if (value.startsWith(CommonConstants.GET)) {
 
-				method = CommonConstants.GET;
-				path = SplitUtils.getCertainSplitValueBy(value, CommonConstants.PATH, CommonConstants.SPACE);
-				version = SplitUtils.getCertainSplitValueBy(value, CommonConstants.VERSION, CommonConstants.SPACE);
+		path = head[1];
+		version = head[2];
 
-			} else if (value.startsWith(CommonConstants.POST)) {
-
-				method = CommonConstants.POST;
-				path = SplitUtils.getCertainSplitValueBy(value, CommonConstants.PATH, CommonConstants.SPACE);
-				version = SplitUtils.getCertainSplitValueBy(value, CommonConstants.VERSION, CommonConstants.SPACE);
-
-			} else if (value.startsWith(CommonConstants.HOST)) {
-
-				host = SplitUtils.getCertainSplitValueBy(value, CommonConstants.VALUE, CommonConstants.COLON_SPLITTER);
-
-			} else if (value.startsWith(CommonConstants.CONNECTION)) {
-
-				connection = SplitUtils.getCertainSplitValueBy(value, CommonConstants.VALUE, CommonConstants.COLON_SPLITTER);
-
-			} else if (value.startsWith(CommonConstants.CSP)) {
-
-				csp = SplitUtils.getCertainSplitValueBy(value, CommonConstants.VALUE, CommonConstants.COLON_SPLITTER);
-
-			} else if (value.startsWith(CommonConstants.CACHE_CONTROL)) {
-
-				cacheControl = SplitUtils.getCertainSplitValueBy(value, CommonConstants.VALUE, CommonConstants.COLON_SPLITTER);
-
-			} else if (value.startsWith(CommonConstants.USER_AGENT)) {
-
-				userAgent = SplitUtils.getCertainSplitValueBy(value, CommonConstants.VALUE, CommonConstants.COLON_SPLITTER);
-
-			} else if (value.startsWith(CommonConstants.ACCEPT)) {
-
-				accept = SplitUtils.getCertainSplitValueBy(value, CommonConstants.VALUE, CommonConstants.COLON_SPLITTER);
-
-			} else if (value.startsWith(CommonConstants.ACCEPT_ENCODING)) {
-
-				acceptEncoding = SplitUtils.getCertainSplitValueBy(value, CommonConstants.VALUE, CommonConstants.COLON_SPLITTER);
-
-			} else if (value.startsWith(CommonConstants.ACCEPT_LANGUAGE)) {
-
-				acceptLanguage = SplitUtils.getCertainSplitValueBy(value, CommonConstants.VALUE, CommonConstants.COLON_SPLITTER);
-
-			} else if (value.startsWith(CommonConstants.CONTENT_LENGTH)) {
-
-				contentLenght = Integer.parseInt(SplitUtils.getCertainSplitValueBy(value, CommonConstants.VALUE,
-						CommonConstants.COLON_SPLITTER));
-
-			} else if (value.startsWith(CommonConstants.ORIGIN)) {
-
-				origin = SplitUtils.getCertainSplitValueBy(value, CommonConstants.VALUE, CommonConstants.COLON_SPLITTER);
-
-			} else if (value.startsWith(CommonConstants.CONTENT_TYPE)) {
-
-				contentType = SplitUtils.getCertainSplitValueBy(value, CommonConstants.VALUE, CommonConstants.COLON_SPLITTER);
+		if (array.length > 1) {
+			for (int i = 1; i < array.length; i++) {
+				body += array[i];
 			}
-		}
-
-		if (contentLenght > 0) {
-			body = headerValue.get(headerValue.size() - 1);
 		}
 
 	}

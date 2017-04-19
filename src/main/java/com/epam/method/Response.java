@@ -13,14 +13,10 @@ public class Response {
 	private OutputStream os;
 	private String version;
 	private String statusCode;
-	private String server;
-	private String date;
-	private String contentType;
-	private String contentLength;
 	private String body;
 
 	public String toString() {
-		return ("\n" + version + " " + statusCode + "Date: " + date + "\nServer: " + server + "\nContent-length: " + contentLength + "\nContent-type: " + contentType + "\n" + body);
+		return ("\n" + version + " " + statusCode + " " + body);
 	}
 
 	public Response(OutputStream outputStream) {
@@ -32,18 +28,6 @@ public class Response {
 		Map<String, String> responseMap = new LinkedHashMap<String, String>();
 
 		responseMap.put(version, statusCode);
-
-		responseMap.put(ResponseConstants.SERVER, ResponseConstants.SERVER_VALUE);
-
-		if (contentType != null) {
-			responseMap.put(CommonConstants.CONTENT_TYPE, contentType + "\r\n");
-		}
-
-		if (contentLength != null) {
-			responseMap.put(CommonConstants.CONTENT_LENGTH, contentLength + "\r\n");
-		}
-
-		responseMap.put(CommonConstants.CONNECTION, ResponseConstants.CONNECTION_VALUE);
 
 		if (body != null) {
 			responseMap.put(ResponseConstants.BODY, body);
@@ -57,7 +41,7 @@ public class Response {
 			} else
 				respose += key + value;
 		}
-		os.write(respose.getBytes());
+		//os.write(respose.getBytes());
 	}
 
 	public String getVersion() {
@@ -74,48 +58,6 @@ public class Response {
 
 	public void setStatusCode(String statusCode) {
 		this.statusCode = statusCode;
-	}
-
-	public String getServer() {
-		return server;
-	}
-
-	public void setServer(String server) {
-		this.server = server;
-	}
-
-	public String getDate() {
-		return date;
-	}
-
-	public void setDate(String date) {
-		this.date = date;
-	}
-
-	public String getContentType() {
-		return contentType;
-	}
-
-	public void setContentType(String contentType) {
-		this.contentType = contentType;
-	}
-
-	public String getContentLength() {
-		return contentLength;
-	}
-
-	public void setContentLength(String contentLength) {
-		this.contentLength = contentLength;
-	}
-
-	private String connection;
-
-	public String getConnection() {
-		return connection;
-	}
-
-	public void setConnection(String connection) {
-		this.connection = connection;
 	}
 
 	public String getBody() {

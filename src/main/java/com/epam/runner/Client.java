@@ -13,19 +13,15 @@ public class Client {
             OutputStream sout = socket.getOutputStream();
             DataOutputStream out = new DataOutputStream(sout);
 
-            InputStream sin = socket.getInputStream();
-            DataInputStream in = new DataInputStream(sin);
-            System.out.println(in.readUTF());
+            //InputStream sin = socket.getInputStream();
+            //DataInputStream in = new DataInputStream(sin);
+            //System.out.println(in.readUTF());
 
-            out.writeUTF("GET /book HTTP/1.1\n" +
-                    "User-Agent: Mozilla/4.0 (compatible; MSIE5.01; Windows NT)\n" +
-                    "Host: www.tutorialspoint.com\n" +
-                    "Accept-Language: en-us\n" +
-                    "Accept-Encoding: gzip, deflate\n" +
-                    "Connection: Keep-Alive"); // отсылаем введенную строку текста серверу.
+            /*out.writeUTF("GET /book HTTP/1.1\n"); // отсылаем введенную строку текста серверу.
+            out.flush();*/
+            out.writeUTF("POST /book HTTP/1.1\n" +
+                    "book.xml");
             out.flush();
-            String line = in.readUTF();
-            System.out.println(line);
 
         } catch (Exception x) {
         }

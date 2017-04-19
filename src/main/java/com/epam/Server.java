@@ -80,13 +80,10 @@ public class Server {
 			try {
 				InputStream sin = socket.getInputStream();
 				DataInputStream in = new DataInputStream(sin);
-				System.out.print(in.readUTF());
-				String[] array = in.readUTF().split(" ");
-				//rq = new Request(new BufferedReader(new InputStreamReader(in)));//socket.getInputStream())));
-
-				rq.setMethod(CommonConstants.GET);
-				rq.setPath(array[1]);
-				rq.setVersion(array[2]);
+				String line = in.readUTF();
+				String[] clientRq = line.split("\n");
+				rq = new Request(clientRq);//new BufferedReader(new InputStreamReader(socket.getInputStream())));
+				String[] array = clientRq[0].split(" ");
 
 				rp = new Response(socket.getOutputStream());
 
@@ -96,16 +93,16 @@ public class Server {
 
 			try {
 				Handler handlerForInvoke = findHandler(rq);
+				String s = handlerForInvoke.getiHandle().handle(rq, rp);
+				System.out.println(s);
 				OutputStream sout = socket.getOutputStream();
 				DataOutputStream out = new DataOutputStream(sout);
-				out.writeUTF(handlerForInvoke.getiHandle().handle(rq, rp));
+				out.writeUTF(s);
 			} catch (IOException e1) {
-				e1.printStackTrace();
 			}
 			try {
 				this.socket.close();
 			} catch (IOException e) {
-				e.printStackTrace();
 			}
 		}
 	}

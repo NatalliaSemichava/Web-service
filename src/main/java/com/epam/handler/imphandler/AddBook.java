@@ -7,8 +7,8 @@ import com.epam.constants.ResponseConstants;
 import com.epam.handler.IHandle;
 import com.epam.method.Request;
 import com.epam.method.Response;
-import com.epam.model.BookPojo;
-import com.epam.utils.jackson.JsonUtils;
+import com.epam.model.Book;
+import com.epam.utils.jackson.XMLParserWithDOM;
 
 public class AddBook implements IHandle {
 
@@ -16,16 +16,17 @@ public class AddBook implements IHandle {
 		boolean isMap = true;
 		rp.setVersion(rq.getVersion());
 
-		BookPojo bookCreate = null;
+		Book bookCreate = null;
 		try {
-			bookCreate = JsonUtils.fromJson(rq.getBody(), BookPojo.class);
+			bookCreate = XMLParserWithDOM.readXMLFile(rq.getBody());
+			System.out.println(bookCreate.toString());
 		} catch (Exception ex) {
 			rp.setStatusCode(ResponseConstants.STATUS_CODE_400_BAD_REQUEST);
 			isMap = false;
 		}
 
 		if (isMap) {
-			Store.addBook(bookCreate.getBook());
+			Store.addBook(bookCreate);
 			rp.setStatusCode(ResponseConstants.STATUS_CODE_201_CREATED);
 			System.out.println("Added!");
 		}
