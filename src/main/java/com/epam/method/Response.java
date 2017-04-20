@@ -33,15 +33,15 @@ public class Response {
 			responseMap.put(ResponseConstants.BODY, body);
 		}
 
-		for (Map.Entry<String, String> pair : responseMap.entrySet()) {
+		/*for (Map.Entry<String, String> pair : responseMap.entrySet()) {
 			String key = pair.getKey();
 			String value = pair.getValue();
 			if (key.equals(ResponseConstants.BODY)) {
 				respose += value;
 			} else
 				respose += key + value;
-		}
-		//os.write(respose.getBytes());
+		}*/
+		os.write(respose.getBytes());
 	}
 
 	public String getVersion() {

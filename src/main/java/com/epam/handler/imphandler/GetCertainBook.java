@@ -30,17 +30,21 @@ public class GetCertainBook implements IHandle {
 	private void response(Request rq, Response rp, String acceptType) throws JAXBException {
 		String body = "";
 		int number = Character.getNumericValue(rq.getPath().charAt(rq.getPath().length()-1));
-		Book book = Store.getBook(number);
+		Book book=null;
+		try {
+			book = Store.getBook(number);
+			rp.setVersion(rq.getVersion());
 
-		rp.setVersion(rq.getVersion());
-		rp.setStatusCode(ResponseConstants.STATUS_CODE_200_OK);
-
+			rp.setStatusCode(ResponseConstants.STATUS_CODE_200_OK);
+			body = book.toString();
+		}catch (Exception e) {
+			rp.setStatusCode(ResponseConstants.STATUS_CODE_400_BAD_REQUEST);
+		}
 		//if (acceptType.equals(CommonConstants.ACCEPT_TYPE_XML)) {
 
 		//StringWriter writer = new StringWriter();
 		//MarshallerHelper.marshall(book, writer);
 
-		body = book.toString();
 
 		rp.setBody(body);
 		//} else {

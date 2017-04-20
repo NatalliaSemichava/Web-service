@@ -15,13 +15,13 @@ public class Client {
 
             /*out.writeUTF("POST /book HTTP/1.1\n" +
                     "book.xml");
-            out.flush();
-            out.writeUTF("GET /book/1 HTTP/1.1");
-            out.flush();
-            out.writeUTF("DELETE /book/5 HTTP/1.1");
             out.flush();*/
+            out.writeUTF("GET /book/7 HTTP/1.1");
+            out.flush();/*
+            out.writeUTF("DELETE /book/2 HTTP/1.1");
+            out.flush();
             out.writeUTF("PUT /book/1 HTTP/1.1\n" +
-                    "author update");
+                    "dfg update");*/
             out.flush();
 
         } catch (Exception x) {

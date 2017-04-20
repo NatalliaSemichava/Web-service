@@ -82,7 +82,7 @@ public class Server {
 				DataInputStream in = new DataInputStream(sin);
 				String line = in.readUTF();
 				String[] clientRq = line.split("\n");
-				rq = new Request(clientRq);//new BufferedReader(new InputStreamReader(socket.getInputStream())));
+				rq = new Request(clientRq);
 
 
 				rp = new Response(socket.getOutputStream());

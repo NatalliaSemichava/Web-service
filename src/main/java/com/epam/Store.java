@@ -29,7 +29,7 @@ public class Store {
 		allBook.remove(index-1);
 	}
 
-	public static void updateBook(int index, String attribute, String newLine) {
+	public static void updateBook(int index, String attribute, String newLine) throws Exception {
 		List<Book> allBook = getAllBook();
 		if (attribute.equals("language")) {
 			allBook.get(index - 1).setLanguage(newLine);
@@ -42,6 +42,6 @@ public class Store {
 
 		} else if (attribute.equals("author")) {
 			allBook.get(index - 1).setAuthor(newLine);
-		}
+		}else throw new Exception();
 	}
 }
