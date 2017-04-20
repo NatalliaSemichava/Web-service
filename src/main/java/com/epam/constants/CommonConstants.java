@@ -12,7 +12,7 @@ public class CommonConstants {
 
 	public static final String DELETE = "DELETE";
 
-	public static final String UPDATE = "UPDATE";
+	public static final String PUT = "PUT";
 
 	public static final String HOST = "Host:";
 

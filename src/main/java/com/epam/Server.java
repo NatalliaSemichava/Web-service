@@ -53,7 +53,7 @@ public class Server {
 		String pathFromRequest = rq.getPath();
 
 		for (Handler handler : handlers) {
-			if (metnodFromRequest.equals(handler.getMethod()) && MatcherUtils.isMatches(handler.getUri(), pathFromRequest)) {
+			if (metnodFromRequest.equals(handler.getMethod())) {
 				return handler;
 			}
 		}
@@ -83,7 +83,7 @@ public class Server {
 				String line = in.readUTF();
 				String[] clientRq = line.split("\n");
 				rq = new Request(clientRq);//new BufferedReader(new InputStreamReader(socket.getInputStream())));
-				String[] array = clientRq[0].split(" ");
+
 
 				rp = new Response(socket.getOutputStream());
 

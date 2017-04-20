@@ -69,6 +69,10 @@ public class Request {
 			method = CommonConstants.GET;
 		} else if (head[0].startsWith(CommonConstants.POST)) {
 			method = CommonConstants.POST;
+		} else if (head[0].startsWith(CommonConstants.DELETE)) {
+			method = CommonConstants.DELETE;
+		} else if (head[0].startsWith(CommonConstants.PUT)) {
+			method = CommonConstants.PUT;
 		}
 
 

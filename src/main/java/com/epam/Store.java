@@ -14,6 +14,11 @@ public class Store {
 		return books;
 	}
 
+	public static Book getBook(int id){
+		List<Book> books= getAllBook();
+		return books.get(id-1);
+	}
+
 	public static void addBook(Book book) {
 		List<Book> allBook = getAllBook();
 		allBook.add(book);
@@ -21,6 +26,22 @@ public class Store {
 
 	public static void deleteBook(int index){
 		List<Book> allBook = getAllBook();
-		allBook.remove(index);
+		allBook.remove(index-1);
+	}
+
+	public static void updateBook(int index, String attribute, String newLine) {
+		List<Book> allBook = getAllBook();
+		if (attribute.equals("language")) {
+			allBook.get(index - 1).setLanguage(newLine);
+
+		} else if (attribute.equals("edition")) {
+			allBook.get(index - 1).setEdition(newLine);
+
+		} else if (attribute.equals("date")) {
+			allBook.get(index - 1).setDate(newLine);
+
+		} else if (attribute.equals("author")) {
+			allBook.get(index - 1).setAuthor(newLine);
+		}
 	}
 }

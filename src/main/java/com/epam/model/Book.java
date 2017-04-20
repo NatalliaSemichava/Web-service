@@ -44,6 +44,10 @@ public class Book {
 	this.date = date;
     }
 
+    public String toString() {
+        return ("id: " + id + " language: " + language + " edition: " + edition + " author:" + author + " date: " + date);
+    }
+
     public int getId() {
 	return id;
     }

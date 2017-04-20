@@ -13,14 +13,15 @@ public class Client {
             OutputStream sout = socket.getOutputStream();
             DataOutputStream out = new DataOutputStream(sout);
 
-            //InputStream sin = socket.getInputStream();
-            //DataInputStream in = new DataInputStream(sin);
-            //System.out.println(in.readUTF());
-
-            /*out.writeUTF("GET /book HTTP/1.1\n"); // отсылаем введенную строку текста серверу.
-            out.flush();*/
-            out.writeUTF("POST /book HTTP/1.1\n" +
+            /*out.writeUTF("POST /book HTTP/1.1\n" +
                     "book.xml");
+            out.flush();
+            out.writeUTF("GET /book/1 HTTP/1.1");
+            out.flush();
+            out.writeUTF("DELETE /book/5 HTTP/1.1");
+            out.flush();*/
+            out.writeUTF("PUT /book/1 HTTP/1.1\n" +
+                    "author update");
             out.flush();
 
         } catch (Exception x) {
