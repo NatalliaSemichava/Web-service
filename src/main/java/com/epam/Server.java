@@ -94,7 +94,7 @@ public class Server {
 			try {
 				Handler handlerForInvoke = findHandler(rq);
 				String s = handlerForInvoke.getiHandle().handle(rq, rp);
-				System.out.println(s);
+				//System.out.println(s);
 				OutputStream sout = socket.getOutputStream();
 				DataOutputStream out = new DataOutputStream(sout);
 				out.writeUTF(s);
